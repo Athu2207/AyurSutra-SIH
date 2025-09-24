@@ -1,0 +1,542 @@
+/* Dashboard.css */
+
+
+.outer-main-form {
+  display: flex;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.side {
+  width: 250px;
+  background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+  color: white;
+  padding: 20px 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  z-index: 1000;
+  
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(45deg, #ff6b9d, #ff8e53);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.side-buttons {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 5px 0;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 0.3rem;
+  border-left: 4px solid transparent;
+}
+
+.side-buttons:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #ff6b9d;
+}
+
+.side-buttons.active {
+  background: rgba(255, 255, 255, 0.2);
+  border-left: 4px solid #ff6b9d;
+}
+
+.side-buttons .icon {
+  margin-right: 15px;
+  font-size: 18px;
+}
+
+/* Main Content Styles */
+.main-content {
+  margin-left: 250px; /* Same as sidebar width */
+  padding: 30px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  max-width: calc(100% - 250px); /* Prevent content from extending beyond viewport */
+}
+.header {
+  text-align: start;
+  margin:0;
+  position: relative;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: #1a73e8;
+  font-weight: 700;
+  margin-top: -3.5rem;
+}
+
+.header h3 {
+  font-size: 1.5rem;
+  color: #555;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.header p {
+  font-size: 1.1rem;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.profile-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: -7.5rem auto 4rem;
+  margin-right: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border: 4px solid #1a73e8;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 115, 232, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profile-overlay .heart-icon {
+  color: white;
+  font-size: 2rem;
+}
+
+.profile-container:hover .profile-overlay {
+  opacity: 1;
+}
+
+.header-divider, .section-divider {
+  border: none;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #1a73e8, #ff6b9d, transparent);
+  margin: 20px auto;
+  width: 80%;
+  max-width: 500px;
+}
+
+/* Cards Section */
+.card-content {
+  width: 100%;
+  max-width: 1200px; /* Optional: Set a max-width for larger screens */
+  margin: 0 auto;
+}
+
+
+.section-title h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #1a73e8;
+  margin-bottom: 30px;
+  position: relative;
+  width: 100%;
+}
+
+.section-title h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #1a73e8, #ff6b9d);
+  border-radius: 2px;
+}
+
+.cards-row {
+  display: flex;
+  justify-content: center; /* Center the cards */
+  gap: 30px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.card {
+  width: 350px;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0; /* Will be animated by GSAP */
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.overlay-icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-body h3 {
+  font-size: 1.5rem;
+  color: #1a73e8;
+  margin-bottom: 10px;
+}
+
+.card-body p {
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.book-button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg, #1a73e8, #0d47a1);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.book-button:hover {
+  background: linear-gradient(45deg, #0d47a1, #1a73e8);
+  box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+}
+
+/* Specialties Section */
+.doctors-list {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.doctors-list h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #1a73e8;
+  margin-bottom: 10px;
+  width: 100%;
+  margin-left:50px ;
+}
+
+.buttons-available-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin: 30px auto 0;
+  max-width: 1000px; /* Control the width of the buttons container */
+}
+
+.specialty-button {
+  padding: 10px 20px;
+  background: white;
+  border: 2px solid #1a73e8;
+  color: #1a73e8;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0; /* Will be animated by GSAP */
+}
+
+.specialty-button:hover {
+  background: #1a73e8;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
+}
+
+/* About Us Section */
+.about-us-info h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #1a73e8;
+  margin-top: 50px;
+  width:100%;
+  margin-left:50px
+}
+
+.card-to-show {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+  margin-top: 30px;
+}
+
+.about-us-card-1, .about-us-card-2 {
+  width: 35%;
+  min-width: 30px;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  
+  opacity: 0; /* Will be animated by GSAP */
+}
+
+.about-us-card-1 {
+  background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+  color: white;
+  margin-left: 30px;
+}
+
+.about-us-card-2 {
+  background: linear-gradient(135deg, #ff6b9d 0%, #ff8e53 100%);
+  color: white;
+}
+
+.about-us-card-1:hover, .about-us-card-2:hover {
+  transform: translateY(-10px);
+}
+
+.about-us-card-1 h3, .about-us-card-2 h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.about-us-card-1 p, .about-us-card-2 p {
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .side {
+    width: 200px;
+  }
+  
+  .main-content {
+    margin-left: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .side {
+    width: 70px;
+    padding: 20px 5px;
+  }
+  
+  .side-buttons span, .logo-text {
+    display: none;
+  }
+  
+  .side-buttons {
+    justify-content: center;
+    padding: 15px 5px;
+  }
+  
+  .main-content {
+    margin-left: 70px;
+    padding: 20px;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  .about-us-card-1, .about-us-card-2 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .side {
+    display: none;
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .cards-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* AI Features Section */
+.ai-features-section h1{
+  text-align: center;
+  font-size: 2rem;
+  color: #1a73e8;
+  margin-top: 120px;
+  width:100%;
+  margin-left:10px
+}
+.report-analyzer-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: left;
+  background-color:#1a73e8 ;
+  border-radius: 20px;
+  color: white;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.upload-section {
+  margin-bottom: 20px;
+}
+
+.upload-section input {
+  margin-right: 10px;
+}
+
+.upload-section button {
+  padding: 6px 12px;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  background: rgb(9, 225, 9);
+  color: white;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.upload-section button:hover {
+  background: #008b1f;
+}
+
+.loading-text {
+  font-weight: bold;
+  color: #ff9800;
+}
+
+.analysis-card {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
+
+.analysis-card h3 {
+  margin-bottom: 15px;
+}
+
+.analysis-card ul {
+  padding-left: 20px;
+}
+
+.sos-alert {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: red;
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.sos-alert button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: white;
+  color: red;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sos-alert button:hover {
+  background: #f5f5f5;
+}
+
+

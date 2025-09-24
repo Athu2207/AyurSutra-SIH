@@ -1,0 +1,275 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f9fc;
+  color: #333;
+  font-family: 'Inter', sans-serif;
+}
+
+.login-sidebar {
+  width: 200px;
+  background: linear-gradient(135deg, #ff5e78, #6b48ff);
+  color: #fff;
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-logo-container {
+  margin-bottom: 30px;
+  width: 100%;
+  text-align: center;
+}
+
+.sidebar-logo {
+  width: 140px;
+  height: auto;
+}
+
+.sidebar-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.sidebar-item h3 {
+  font-size: 22px;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  width: 100%;
+  text-align: center;
+}
+
+.sidebar-divider {
+  width: 80%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.login-main-content {
+  display: flex;
+  flex: 1;
+  margin-left: 200px; /* Matches reduced sidebar width */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.login-image-container {
+  flex: 1;
+  position: relative;
+  border-radius: 12px;
+  margin-right: 20px;
+  overflow: hidden;
+  max-height: 100%;
+  z-index: 1; /* Ensure image stays below sidebar */
+}
+
+.login-doctor-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.login-image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 94, 120, 0.7); /* Pink overlay */
+  padding: 20px;
+  color: #fff;
+}
+
+.overlay-text {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.login-form-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-tab-selector {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e6e9ff;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tab-button:hover {
+  color: #ff5e78; /* Pink hover */
+}
+
+.tab-button.active-tab {
+  color: #ff5e78;
+  border-bottom: 2px solid #ff5e78;
+}
+
+.form-auth-toggle {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.auth-toggle-button {
+  flex: 1;
+  padding: 10px;
+  background: #e6e9ff;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.auth-toggle-button.active-toggle {
+  background: #ff5e78;
+  color: #fff;
+}
+
+.auth-toggle-button:hover {
+  background: #ff7b91;
+  color: #fff;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ff5e78;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.form-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px;
+  color: #666;
+  font-size: 18px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #e6e9ff;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #ff5e78;
+  box-shadow: 0 0 5px rgba(255, 94, 120, 0.3);
+}
+
+.form-submit-button {
+  padding: 12px;
+  background: #ff5e78;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.form-submit-button:hover {
+  background: #ff7b91;
+}
+
+.form-footer-links {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.forgot-password {
+  color: #ff5e78;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.auth-switch-text {
+  font-size: 14px;
+  color: #666;
+}
+
+.auth-switch-link {
+  color: #ff5e78;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.auth-switch-link:hover {
+  text-decoration: underline;
+}
+
+.login-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: #fff;
+  border-top: 1px solid #e6e9ff;
+  color: #666;
+  font-size: 14px;
+  width: 100%;
+  text-align: center;
+}

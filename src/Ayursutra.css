@@ -1,0 +1,672 @@
+/* Ayursutra.css - Enhanced with beautiful animations and design */
+
+/* Base styles and reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  color: #2c3e2f;
+  background: #f8f6f2;
+}
+
+/* Container styles */
+.ad-container {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background with ayurvedic image */
+.ad-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.ad-background-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(58, 90, 64, 0.85), rgba(139, 69, 19, 0.7)), 
+              url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1820&q=80') center/cover;
+  filter: saturate(1.2);
+}
+
+.ad-background-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 50%, rgba(139, 69, 19, 0.2) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(58, 90, 64, 0.3) 0%, transparent 50%);
+}
+
+/* Animated background elements */
+.ad-background-element {
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0.3;
+  z-index: 0;
+  animation: floatElement 15s infinite ease-in-out;
+}
+
+.ad-bg-element-1 {
+  top: 15%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.ad-bg-element-2 {
+  top: 25%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.ad-bg-element-3 {
+  bottom: 20%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+.ad-bg-element-4 {
+  bottom: 30%;
+  right: 10%;
+  animation-delay: 6s;
+}
+
+@keyframes floatElement {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+    opacity: 0.4;
+  }
+}
+
+/* Comet animation */
+.ad-comet {
+  position: absolute;
+  font-size: 3rem;
+  z-index: 1;
+  filter: blur(1px);
+  opacity: 0;
+}
+
+/* Herb rain animation */
+.ad-herb-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ad-herb {
+  font-size: 2rem;
+  opacity: 0;
+  animation: herbFall 5s linear forwards;
+}
+
+@keyframes herbFall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Header styles */
+.ad-header {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.ad-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ad-logo-icon {
+  font-size: 2.5rem;
+  margin-right: 0.5rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.ad-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to right, #e6d7b8, #a4b787);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ad-tagline {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+.ad-tagline span {
+  color: #e6d7b8;
+  font-weight: 600;
+}
+
+/* Content area */
+.ad-content {
+  position: relative;
+  z-index: 10;
+  padding: 0 2rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Quiz intro card */
+.ad-quiz-intro {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.ad-quiz-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(230, 215, 184, 0.8));
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ad-quiz-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.ad-quiz-image {
+  margin-bottom: 1.5rem;
+}
+
+.ad-image-placeholder {
+  font-size: 4rem;
+  animation: grow 3s infinite ease-in-out;
+}
+
+@keyframes grow {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.ad-quiz-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #3a5a40;
+}
+
+.ad-quiz-card p {
+  color: #2c3e2f;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.ad-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.ad-feature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #3a5a40;
+  font-weight: 500;
+}
+
+.ad-feature-icon {
+  font-size: 1.2rem;
+}
+
+/* Buttons */
+.ad-cta-button {
+  background: linear-gradient(to right, #3a5a40, #588157);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(58, 90, 64, 0.3);
+}
+
+.ad-cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(58, 90, 64, 0.4);
+  background: linear-gradient(to right, #588157, #6a994e);
+}
+
+.ad-button-icon {
+  transition: transform 0.3s ease;
+}
+
+.ad-cta-button:hover .ad-button-icon {
+  transform: translateX(5px);
+}
+
+.ad-secondary-button {
+  background: transparent;
+  color: #3a5a40;
+  border: 2px solid #3a5a40;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ad-secondary-button:hover {
+  background: rgba(58, 90, 64, 0.1);
+  transform: translateY(-3px);
+}
+
+/* Quiz container */
+.ad-quiz-container {
+  max-width: 700px;
+  margin: 0 auto 4rem;
+}
+
+.ad-quiz-progress {
+  margin-bottom: 2rem;
+}
+
+.ad-progress-bar {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.ad-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #a4b787, #588157);
+  border-radius: 10px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px rgba(164, 183, 135, 0.5);
+}
+
+.ad-quiz-progress p {
+  text-align: center;
+  color: white;
+  font-weight: 500;
+}
+
+.ad-question-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(230, 215, 184, 0.8));
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.ad-question-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #3a5a40;
+  text-align: center;
+}
+
+.ad-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ad-option-btn {
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid transparent;
+  padding: 1.2rem 1.5rem;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  color: #2c3e2f;
+  backdrop-filter: blur(5px);
+}
+
+.ad-option-btn:hover {
+  background: rgba(164, 183, 135, 0.3);
+  border-color: #a4b787;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Completion message */
+.ad-completion-message {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.ad-completion-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(230, 215, 184, 0.8));
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.ad-completion-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  animation: bounce 1s ease;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+.ad-completion-card h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #3a5a40;
+}
+
+.ad-completion-card p {
+  color: #2c3e2f;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.ad-action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Features section with yoga background */
+.ad-features-section {
+  position: relative;
+  margin-top: 4rem;
+  padding: 4rem 0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.ad-features-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.ad-yoga-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('https://images.unsplash.com/photo-1545389336-8c108a3d0b74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80') center/cover;
+  opacity: 0.2;
+  filter: sepia(0.3) brightness(0.8);
+}
+
+.ad-features-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(58, 90, 64, 0.7), rgba(139, 69, 19, 0.5));
+}
+
+.ad-feature-cards {
+   display: flex;
+  justify-content: center;   /* center horizontally */
+  align-items: stretch;      /* equal height */
+  gap: 2rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;           /* allow wrapping on small screens */
+  position: relative;        /* remove absolute positioning */
+  z-index: 10;
+}
+
+.ad-feature-card {
+  flex: 1 1 30%;             /* 3 per row on desktop */
+  min-width: 260px;          /* prevents shrinking too much */
+  max-width: 350px;
+  height: auto;  
+  max-height: 450px;            /* let content define height */
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(230, 215, 184, 0.7));
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ad-feature-card:hover {
+  transform: translateY(-10px) rotate(2deg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.ad-feature-card-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.ad-report-analyzer-bg {
+  background: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1780&q=80') center/cover;
+}
+
+.ad-diet-plan-bg {
+  background: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2053&q=80') center/cover;
+}
+
+.ad-herbal-remedies-bg {
+  background: url('https://images.unsplash.com/photo-1459478309853-2c33a60058e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;
+}
+
+.ad-feature-card-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ad-feature-card h4 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #3a5a40;
+}
+
+.ad-feature-card p {
+  color: #2c3e2f;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.ad-feature-button {
+  background: linear-gradient(to right, #3a5a40, #588157);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+}
+
+.ad-feature-button:hover {
+  background: linear-gradient(to right, #588157, #6a994e);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(58, 90, 64, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .ad-title {
+    font-size: 2rem;
+  }
+  
+  .ad-tagline {
+    font-size: 1rem;
+  }
+  
+  .ad-content {
+    padding: 0 1rem 2rem;
+  }
+  
+  .ad-quiz-card, .ad-question-card, .ad-completion-card {
+    padding: 1.5rem;
+  }
+  
+  .ad-feature-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .ad-action-buttons {
+    flex-direction: column;
+  }
+}
+
+/* Scroll animations */
+.ad-fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.ad-fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: none;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(164, 183, 135, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #3a5a40, #588157);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #588157, #6a994e);
+}
+
+.ad-completion-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.ad-completion-actions button {
+  margin: 0;
+}
+
+/* Ensure the analytics section is visible for PDF capture */
+.ad-analytics {
+  background: rgb(121, 248, 165);
+  border-radius: 16px;
+  max-width: 300px;
+  padding: 2rem;
+  margin-left: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}

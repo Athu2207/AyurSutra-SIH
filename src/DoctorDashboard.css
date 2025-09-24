@@ -1,0 +1,271 @@
+/* Doctor Dashboard Styles */
+body{
+  overflow-y: scroll;
+}
+.docdash-main {
+  margin-left: 20vw;
+  height: 100vh; /* Full viewport height */
+  background-color: #f4f7fc;
+  padding: 2.5rem;
+  overflow: hidden; /* Prevent scrolling */
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease;
+}
+
+/* Sidebar Styles */
+.docdash-sidebar {
+  width: 20vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #1a56db 0%, #0f3490 100%);
+  padding: 1.5rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  transition: width 0.3s ease;
+}
+
+.docdash-sidebar::-webkit-scrollbar {
+  width: 0;
+}
+
+.docdash-sidebar p {
+  text-align: center;
+  letter-spacing: 0.2rem;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.docdash-logo-container {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.docdash-logo {
+  background-color: #ffffff;
+  color: #1a56db;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.docdash-logo:hover {
+  transform: scale(1.05);
+}
+
+.docdash-button {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  margin: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-align: left;
+}
+
+.docdash-button .icon {
+  margin-right: 1rem;
+  font-size: 1.3rem;
+}
+
+.docdash-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateX(8px);
+}
+
+.docdash-button.active {
+  background-color: rgba(255, 255, 255, 0.25);
+  font-weight: 600;
+}
+
+/* Header Styles */
+.docdash-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  position: relative;
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.docdash-header img {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #1a56db;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.docdash-header h1 {
+  color: #1a56db;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.docdash-header h2 {
+  color: #2d3748;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.docdash-header p {
+  color: #64748b;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* Title Styles */
+.docdash-title {
+  text-align: center;
+  margin: 1.5rem 0;
+  flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+.docdash-title h2 {
+  color: #1e293b;
+  font-size: 1.8rem;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+.docdash-title h2::after {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 3px;
+  background: #1a56db;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+/* Cards Container */
+.docdash-cards-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-grow: 1; /* Allow container to grow but not shrink */
+  overflow: hidden; /* Prevent internal scrolling */
+}
+
+/* Cards Row */
+.docdash-cards-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+/* Card Styles */
+.docdash-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0; /* Prevent cards from shrinking */
+}
+
+.docdash-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+}
+
+.docdash-card-content {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.docdash-card-content h3 {
+  color: #2d3748;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.docdash-card-content p {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.docdash-card-image {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8fafc;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.docdash-image-overlay {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #1a56db;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styles */
+.docdash-button:not(.docdash-sidebar .docdash-button) {
+  background: #1a56db;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-top: 1rem;
+}
+
+.docdash-button:not(.docdash-sidebar .docdash-button):hover {
+  background: #0f3490;
+  transform: translateY(-2px);
+}

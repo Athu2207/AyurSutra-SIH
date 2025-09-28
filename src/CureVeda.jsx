@@ -251,7 +251,7 @@ const AyurSutra = () => {
             </div>
             <div className="ayur-service-card">
               <div className="ayur-service-icon">
-                <img src="https://images.unsplash.com/photo-1506003906963-54f54535d12f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Treatment Planning" />
+                <img src="https://imgs.search.brave.com/l822rCL6dzr35lS3bL4mNRqSG4UEUFBI4j5USJRdQz8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/c2Ftd2FydGhpa2Eu/Y29tL2Jsb2cvaW1h/Z2VzL3VsdGltYXRl/LWd1aWRlLXRvLXBs/YW5uaW5nLWFuLWF5/dXJ2ZWRhLXdlbGxu/ZXNzLXJldHJlYXQu/d2VicA" alt="Treatment Planning" />
               </div>
               <h3>Personalized Treatment Plans</h3>
               <p>Custom therapy sequences and diet/lifestyle recommendations based on individual needs.</p>

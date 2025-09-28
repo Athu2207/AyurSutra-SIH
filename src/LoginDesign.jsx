@@ -1,33 +1,104 @@
+// LoginDesign.jsx
 import React, { useEffect, useState } from 'react';
 import "./LoginDesign.css";
 import { ToastContainer, toast } from 'react-toastify';
-import { auth, db } from "./firebase.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import 'react-toastify/dist/ReactToastify.css';
+import { FaUser, FaUserMd, FaLock, FaEnvelope, FaIdCard, FaStethoscope, FaLeaf, FaSpa } from 'react-icons/fa';
+import { auth, db } from "./firebase"; // ✅ adjust path if needed
+import { 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword 
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
-import doctor from "./assets/Doctor.png";
-import logo from "./assets/LOGO.png";
-import { FaUser, FaUserMd, FaLock, FaEnvelope, FaIdCard, FaStethoscope } from 'react-icons/fa';
+import { onAuthStateChanged } from "firebase/auth";
+import { getDoc } from "firebase/firestore";
 
 function LoginDesign() {
-  const navigate = useNavigate();
   const [currentIdx, setCurrentIdx] = useState(0);
   const [activeTab, setActiveTab] = useState('patient'); 
   const [isSignIn, setIsSignIn] = useState(true);
+  const [typedText, setTypedText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(150);
+  const navigate = useNavigate();
 
   const texts = [
-    "Your medical needs are now just a click away!",
-    "Find the best doctors near you!",
-    "Book appointments in seconds!",
-    "Your health, our priority!"
+    "Balance your doshas with ancient wisdom",
+    "Where traditional Ayurveda meets modern care",
+    "Personalized wellness journeys",
+    "Harmony of mind, body and spirit"
   ];
 
+  // Redirect if already logged in
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      // No one is logged in yet, just return or navigate to login if needed
+      return;
+    }
+
+    try {
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const role = userDoc.data().role || "patient";
+        navigate(role === "doctor" ? "/doctor-dashboard" : "/welcome");
+      } else {
+        navigate("/welcome");
+      }
+    } catch (err) {
+      console.error("Error fetching user role:", err);
+      navigate("/welcome");
+    }
+  });
+
+  return () => unsubscribe();
+}, [navigate]);
+  // Typing animation effect
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIdx((prev) => (prev + 1) % texts.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [texts.length]);
+    const handleTyping = () => {
+      const current = currentIdx % texts.length;
+      const fullText = texts[current];
+      
+      setTypedText(isDeleting 
+        ? fullText.substring(0, typedText.length - 1)
+        : fullText.substring(0, typedText.length + 1)
+      );
+      
+      setTypingSpeed(isDeleting ? 75 : 150);
+      
+      if (!isDeleting && typedText === fullText) {
+        setTimeout(() => setIsDeleting(true), 2000);
+      } else if (isDeleting && typedText === '') {
+        setIsDeleting(false);
+        setCurrentIdx((currentIdx + 1) % texts.length);
+      }
+    };
+    
+    const timer = setTimeout(handleTyping, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [typedText, isDeleting, currentIdx, texts, typingSpeed]);
+
+  // Floating elements animation
+  useEffect(() => {
+    const moveElements = () => {
+      const elements = document.querySelectorAll('.ayurveda-floating-element');
+      elements.forEach(el => {
+        const amplitude = parseInt(el.getAttribute('data-amplitude'));
+        const duration = parseInt(el.getAttribute('data-duration'));
+        const offsetY = Math.sin(Date.now() / (duration * 1000)) * amplitude;
+        el.style.transform = `translateY(${offsetY}px)`;
+      });
+    };
+    
+    const animationId = requestAnimationFrame(moveElements);
+    const intervalId = setInterval(moveElements, 50);
+    
+    return () => {
+      cancelAnimationFrame(animationId);
+      clearInterval(intervalId);
+    };
+  }, []);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,145 +106,167 @@ function LoginDesign() {
   const [medicalno, setMedicalno] = useState("");
   const [specialization, setSpecialization] = useState("");
 
-  const handlelogin = async (e) => {
-    e.preventDefault();
-    try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      const snap = await getDoc(doc(db, "Users", user.uid));
-      const profile = snap.data();
 
-      if (profile?.type !== activeTab) {
-        toast.error(`This is a ${profile?.type} account. Please use the correct tab.`);
-        await auth.signOut();
-        return;
+const handlelogin = async (e) => {
+  e.preventDefault();
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // 🔑 Fetch the user's role from Firestore (users collection)
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+
+    if (userDoc.exists()) {
+      const role = userDoc.data().role || "patient";
+
+      toast.success("Logged in successfully!");
+      if (role === "doctor") {
+        navigate("/doctor-dashboard");  // ✅ Doctor goes here
+      } else {
+        navigate("/welcome");           // ✅ Patient goes here
       }
-
-      toast.success("Login successful!");
-      navigate("/testing", { state: { name: profile.firstname } });
-    } catch (err) {
-      toast.error(err.message);
+    } else {
+      // fallback if no user doc found, treat as patient
+      navigate("/welcome");
     }
-  };
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
 
-  const handlelogindoctors = async (e) => {
-    e.preventDefault();
-    try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      const snap = await getDoc(doc(db, "Doctors", user.uid));
-      const profile = snap.data();
 
-      if (profile?.type !== activeTab) {
-        toast.error(`This is a ${profile?.type} account. Please use the correct tab.`);
-        await auth.signOut();
-        return;
-      }
+ const handleregister = async (e) => {
+  e.preventDefault();
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    await setDoc(doc(db, "users", userCredential.user.uid), {
+      name: fname,
+      email,
+      role: "patient",
+      createdAt: new Date(),
+    });
+    toast.success("Patient registered successfully!");
+    setIsSignIn(true); // switch back to login
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
 
-      toast.success("Login successful!");
-      navigate("/doctors", { state: { name: profile.firstname } });
-    } catch (err) {
-      toast.error(err.message);
-    }
-  };
+ const handleregisterdoctors = async (e) => {
+  e.preventDefault();
+  try {
+    const doctorCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-  const handleregister = async (e) => {
-    e.preventDefault();
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      if (user) {
-        await setDoc(doc(db, "Users", user.uid), {
-          email: user.email,
-          firstname: fname,
-          type: activeTab
-        });
-        toast.success("Sign up successful!");
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+    // ✅ Save doctor in users collection with role field
+    await setDoc(doc(db, "users", doctorCredential.user.uid), {
+      name: fname,
+      email,
+      license: medicalno,
+      specialization,
+      role: "doctor",
+      createdAt: new Date(),
+    });
 
-  const handleregisterdoctors = async (e) => {
-    e.preventDefault();
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      if (user) {
-        await setDoc(doc(db, "Doctors", user.uid), {
-          email: user.email,
-          firstname: fname,
-          medical_license: medicalno,
-          type: activeTab,
-          specialization: specialization
-        });
-        toast.success("Sign up successful!");
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+    toast.success("Doctor registered successfully!");
+    setIsSignIn(true);
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
 
   return (
-    <div className="login-container">
-      <div className="login-sidebar">
-        <div className="sidebar-logo-container">
-          <img src={logo} className='sidebar-logo' alt="CureConnect Logo"/>
+    <div className="ayurveda-login-container">
+      {/* Ayurvedic decorative elements */}
+      <div className="ayurveda-decoration">
+        <div className="ayurveda-floating-element" data-amplitude="5" data-duration="3">
+          <FaLeaf className="ayurveda-decoration-icon ayurveda-leaf-1" />
         </div>
-        <div className="sidebar-content">
-          <div className="sidebar-item">
-            <h3>Seamless</h3>
+        <div className="ayurveda-floating-element" data-amplitude="7" data-duration="4">
+          <FaLeaf className="ayurveda-decoration-icon ayurveda-leaf-2" />
+        </div>
+        <div className="ayurveda-floating-element" data-amplitude="6" data-duration="5">
+          <FaLeaf className="ayurveda-decoration-icon ayurveda-leaf-3" />
+        </div>
+        <div className="ayurveda-floating-element" data-amplitude="4" data-duration="6">
+          <FaSpa className="ayurveda-decoration-icon ayurveda-spice-1" />
+        </div>
+      </div>
+      
+      <div className="ayurveda-login-sidebar">
+        <div className="ayurveda-sidebar-logo-container">
+          <div className="ayurveda-sidebar-logo">
+            <FaLeaf />
           </div>
-          <div className="sidebar-divider"></div>
-          <div className="sidebar-item">
-            <h3>Connect</h3>
+          <h2 className="ayurveda-brand-name">AYURSUTRA</h2>
+          <p className="ayurveda-brand-tagline">Ancient Wisdom, Modern Healing</p>
+        </div>
+        <div className="ayurveda-sidebar-content">
+          <div className="ayurveda-sidebar-item">
+            <FaLeaf className="ayurveda-sidebar-icon" />
+            <h3>Holistic Care</h3>
           </div>
-          <div className="sidebar-divider"></div>
-          <div className="sidebar-item">
-            <h3>Manage</h3>
+          <div className="ayurveda-sidebar-divider"></div>
+          <div className="ayurveda-sidebar-item">
+            <FaSpa className="ayurveda-sidebar-icon" />
+            <h3>Balance Doshas</h3>
           </div>
-          <div className="sidebar-divider"></div>
-          <div className="sidebar-item">
-            <h3>Schedule</h3>
+          <div className="ayurveda-sidebar-divider"></div>
+          <div className="ayurveda-sidebar-item">
+            <FaStethoscope className="ayurveda-sidebar-icon" />
+            <h3>Expert Guidance</h3>
+          </div>
+          <div className="ayurveda-sidebar-divider"></div>
+          <div className="ayurveda-sidebar-item">
+            <FaUserMd className="ayurveda-sidebar-icon" />
+            <h3>Personalized Plans</h3>
           </div>
         </div>
       </div>
 
-      <div className="login-main-content">
-        <div className="login-image-container">
-          <img src={doctor} alt="Doctor" className="login-doctor-image"/>
-          <div className="login-image-overlay">
-            <div className="overlay-text">{texts[currentIdx]}</div>
+      <div className="ayurveda-login-main-content">
+        <div className="ayurveda-login-image-container">
+          <div className="ayurveda-pattern-overlay"></div>
+          <div className="ayurveda-login-image-overlay">
+            <div className="ayurveda-typing-container">
+              <h2>{typedText}</h2>
+              <span className="ayurveda-typing-cursor">|</span>
+            </div>
+          </div>
+          
+          {/* Decorative elements */}
+          <div className="ayurveda-decorative-lotus ayurveda-floating-element" data-amplitude="3" data-duration="7">
+            <FaLeaf className="ayurveda-lotus-icon" />
           </div>
         </div>
 
-        <div className="login-form-container">
-          <div className="login-form-card">
-            <div className="form-tab-selector">
+        <div className="ayurveda-login-form-container">
+          <div className="ayurveda-login-form-card">
+            <div className="ayurveda-form-tab-selector">
               <button 
-                className={`tab-button ${activeTab === 'patient' ? 'active-tab' : ''}`} 
+                className={`ayurveda-tab-button ${activeTab === 'patient' ? 'ayurveda-active-tab' : ''}`} 
                 onClick={() => setActiveTab('patient')}
               >
-                <FaUser className="tab-icon" />
+                <FaUser className="ayurveda-tab-icon" />
                 Patient
               </button>
               <button 
-                className={`tab-button ${activeTab === 'doctor' ? 'active-tab' : ''}`} 
+                className={`ayurveda-tab-button ${activeTab === 'doctor' ? 'ayurveda-active-tab' : ''}`} 
                 onClick={() => setActiveTab('doctor')}
               >
-                <FaUserMd className="tab-icon" />
+                <FaUserMd className="ayurveda-tab-icon" />
                 Doctor
               </button>
             </div>
 
-            <div className="form-auth-toggle">
+            <div className="ayurveda-form-auth-toggle">
               <button 
-                className={`auth-toggle-button ${isSignIn ? 'active-toggle' : ''}`} 
+                className={`ayurveda-auth-toggle-button ${isSignIn ? 'ayurveda-active-toggle' : ''}`} 
                 onClick={() => setIsSignIn(true)}
               >
                 Login
               </button>
               <button 
-                className={`auth-toggle-button ${!isSignIn ? 'active-toggle' : ''}`} 
+                className={`ayurveda-auth-toggle-button ${!isSignIn ? 'ayurveda-active-toggle' : ''}`} 
                 onClick={() => setIsSignIn(false)}
               >
                 Sign Up
@@ -181,90 +274,90 @@ function LoginDesign() {
             </div>
 
             {isSignIn ? (
-              <form onSubmit={activeTab === "patient" ? handlelogin : handlelogindoctors} className="login-form">
-                <h2 className="form-title">
+              <form onSubmit={handlelogin} className="ayurveda-login-form">
+                <h2 className="ayurveda-form-title">
                   {activeTab === "patient" ? 'Patient Login' : 'Doctor Login'}
                 </h2>
                 
-                <div className="form-input-group">
-                  <div className="input-icon">
+                <div className="ayurveda-form-input-group">
+                  <div className="ayurveda-input-icon">
                     <FaEnvelope />
                   </div>
                   <input 
                     onChange={(e) => setEmail(e.target.value)} 
-                    className='form-input' 
+                    className='ayurveda-form-input' 
                     type='email' 
                     placeholder='Email Address' 
                     required
                   />
                 </div>
                 
-                <div className="form-input-group">
-                  <div className="input-icon">
+                <div className="ayurveda-form-input-group">
+                  <div className="ayurveda-input-icon">
                     <FaLock />
                   </div>
                   <input 
                     onChange={(e) => setPassword(e.target.value)} 
-                    className='form-input' 
+                    className='ayurveda-form-input' 
                     type='password' 
                     placeholder='Password' 
                     required
                   />
                 </div>
                 
-                <button type="submit" className="form-submit-button">
+                <button type="submit" className="ayurveda-form-submit-button">
                   {activeTab === "patient" ? 'Patient Login' : 'Doctor Login'}
                 </button>
                 
-                <div className="form-footer-links">
-                  <a href="#" className="forgot-password">Forgot password?</a>
-                  <p className="auth-switch-text">
+                <div className="ayurveda-form-footer-links">
+                  <a href="#" className="ayurveda-forgot-password">Forgot password?</a>
+                  <p className="ayurveda-auth-switch-text">
                     Don't have an account? 
-                    <span onClick={() => setIsSignIn(false)} className="auth-switch-link"> Sign up</span>
+                    <span onClick={() => setIsSignIn(false)} className="ayurveda-auth-switch-link"> Sign up</span>
                   </p>
                 </div>
               </form>
             ) : (
-              <form onSubmit={activeTab === 'patient' ? handleregister : handleregisterdoctors} className="login-form">
-                <h2 className="form-title">
+              <form onSubmit={activeTab === 'patient' ? handleregister : handleregisterdoctors} className="ayurveda-login-form">
+                <h2 className="ayurveda-form-title">
                   {activeTab === 'patient' ? 'Patient Registration' : 'Doctor Registration'}
                 </h2>
                 
-                <div className="form-input-group">
-                  <div className="input-icon">
+                <div className="ayurveda-form-input-group">
+                  <div className="ayurveda-input-icon">
                     <FaUser />
                   </div>
                   <input 
                     onChange={(e) => setFname(e.target.value)} 
-                    className='form-input' 
+                    className='ayurveda-form-input' 
                     type='text' 
                     placeholder='Full Name' 
                     required
                   />
                 </div>
                 
-                <div className="form-input-group">
-                  <div className="input-icon">
+                <div className="ayurveda-form-input-group">
+                  <div className="ayurveda-input-icon">
                     <FaEnvelope />
                   </div>
                   <input 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)} 
-                    className='form-input' 
+                    className='ayurveda-form-input' 
                     type='email' 
                     placeholder='Email Address'
                     required
                   />
                 </div>
                 
-                <div className="form-input-group">
-                  <div className="input-icon">
+                <div className="ayurveda-form-input-group">
+                  <div className="ayurveda-input-icon">
                     <FaLock />
                   </div>
                   <input 
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)} 
-                    className='form-input' 
+                    className='ayurveda-form-input' 
                     type='password' 
                     placeholder='Password'
                     required
@@ -273,12 +366,12 @@ function LoginDesign() {
                 
                 {activeTab === 'doctor' && (
                   <>
-                    <div className="form-input-group">
-                      <div className="input-icon">
+                    <div className="ayurveda-form-input-group">
+                      <div className="ayurveda-input-icon">
                         <FaIdCard />
                       </div>
                       <input
-                        className='form-input'
+                        className='ayurveda-form-input'
                         type='text'
                         placeholder='Medical License Number'
                         onChange={(e) => setMedicalno(e.target.value)}
@@ -286,12 +379,12 @@ function LoginDesign() {
                       />
                     </div>
 
-                    <div className="form-input-group">
-                      <div className="input-icon">
+                    <div className="ayurveda-form-input-group">
+                      <div className="ayurveda-input-icon">
                         <FaStethoscope />
                       </div>
                       <input
-                        className='form-input'
+                        className='ayurveda-form-input'
                         type='text'
                         placeholder='Specialization'
                         onChange={(e) => setSpecialization(e.target.value)}
@@ -301,14 +394,14 @@ function LoginDesign() {
                   </>
                 )}
                 
-                <button type="submit" className="form-submit-button">
+                <button type="submit" className="ayurveda-form-submit-button">
                   {activeTab === 'patient' ? 'Register as Patient' : 'Register as Doctor'}
                 </button>
                 
-                <div className="form-footer-links">
-                  <p className="auth-switch-text">
+                <div className="ayurveda-form-footer-links">
+                  <p className="ayurveda-auth-switch-text">
                     Already have an account? 
-                    <span onClick={() => setIsSignIn(true)} className="auth-switch-link"> Login</span>
+                    <span onClick={() => setIsSignIn(true)} className="ayurveda-auth-switch-link"> Login</span>
                   </p>
                 </div>
               </form>
@@ -317,8 +410,8 @@ function LoginDesign() {
         </div>
       </div>
 
-      <div className="login-footer">
-        <p>© CureConnect - All rights reserved 2025</p>
+      <div className="ayurveda-login-footer">
+        <p>© Ayursutra - Ancient Wisdom, Modern Healing 2025</p>
       </div>
 
       <ToastContainer 
